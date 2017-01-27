@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'css/bootstrap.min.css')}}">
+<style type="text/css">
+img
+{
+    width :60%;
+    height : 60%;
+}
+
+.img1
+{
+    width : 15%;
+}
+.he{
+  color:#FF0000;
+  text-align : center
+  }
+.my_show
+{
+  text-align:center;
+  width:100%;
+}
+
+ .bg {
+   background-image:url({{url_for('static', filename='img/show.jpg')}});
+     background-position:center;
+}
+</style>
+<script>
+    <!--返回上一级页面-->
+        function goBack()
+        {
+            window.history.back(-1);
+        }
+</script>
+</head>
+  <title>Processing...</title>
+
+  <body  class="bg">
+  <div style="position:absolute;margin-left: 5%;mragin-top:5%">
+    <button type="button" class="btn btn-primary btn-lg" onClick="goBack()" >Back</button>
+  </div>
+
+
+<div class="my_show">
+   <h2 aling="center">
+   <font color="blue"  style="font-weight: bold; font-size: 40px">识别结果</font>
+
+  </h2>
+    {% if count == 0:%}
+        <h2 aling="center"> <font color="blue">未找到车牌</font></h2>
+    {% else %}
+        {% for plate in plates:%}
+         <h2 aling="center"> <img src="{{ url_for('static',filename = plate['name']) }}" class="img1"/><font color="blue">:{{ plate['num'] }}</font></h2>
+        <br/>
+        {% endfor %}
+    {% endif %}
+
+    <div  style="margin-left:250px; margin-right:250px">
+
+    <h2   align="left">
+     <font color="white"  style="font-size: 20px; font-weight: bold">1    | 灰度化</font>
+   </h2>
+    <hr>
+    <div align="left" style="margin-left:30px;">
+      <img
+              width="400px"
+              height="400px"
+              src="{{ url_for('static',filename = 'images/temp/platelocate/gray{}.jpg'.format(ID)) }}" class="im"/>
+    </div>
+    <!--
+     <h2 > 原图 </h2>
+    <hr>
+    <div>
+      <img src="{{url_for('static', filename = 'images/temp/')}}" class="im"/>
+    </div>
+  -->
+
+
+
+    <h2 align="right">
+      <font color="white" style="font-size: 20px; font-weight: bold" >二值化   |  2</font>
+     </h2>
+    <hr>
+    <div align="right" style="margin-right:30px;">
+      <img src="{{ url_for('static',filename = 'images/temp/platelocate/threshold{}.jpg'.format(ID)) }}"/>
+    </div>
+
+        <h2 align="left">
+     <font color="white"   style="font-size: 20px; font-weight: bold">3   |  闭运算</font>
+      </h2>
+    <hr>
+    <div align="left" style="margin-left:30px;">
+      <img src="{{ url_for('static',filename = 'images/temp/platelocate/morphology{}.jpg'.format(ID)) }}"/>
+    </div>
+
+             <h2 align="right">
+      <font color="white" style="font-size: 20px; font-weight: bold" >轮廓   |  4</font>
+     </h2>
+    <hr>
+    <div align="right" style="margin-right:30px;">
+      <img src="{{ url_for('static',filename = 'images/temp/platelocate/contours_rectangle{}.jpg'.format(ID)) }}"/>
+    </div>
+
+    </div>
+
+
+
+
+
+    </div>
+
+<!--
+    <h2> 车牌定位 </h2>
+    <hr>
+    <div>
+      <img src="../temp/plate/plate0.jpg"/>
+    </div>
+  -->
+    <!--
+    <h2> 字符切割 </h2>
+    <hr>
+    <div>
+      <img src="../temp/platelocate/Rect_partern6.jpg" class="img1"/>&nbsp;&nbsp;&nbsp;
+      <img src="../temp/platelocate/Rect_partern7.jpg"  class="img1"/>&nbsp;&nbsp;&nbsp;
+      <img src="../temp/platelocate/Rect_partern8.jpg"  class="img1"/>&nbsp;&nbsp;&nbsp;
+      <img src="../temp/platelocate/Rect_partern9.jpg"  class="img1"/>&nbsp;&nbsp;&nbsp;
+      <img src="../temp/platelocate/Rect_partern10.jpg"  class="img1"/>&nbsp;&nbsp;&nbsp;
+      <img src="../temp/platelocate/Rect_partern11.jpg"  class="img1"/>&nbsp;&nbsp;&nbsp;
+      <img src="../temp/platelocate/Rect_partern12.jpg"  class="img1"/>
+    </div>
+  -->
+  </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+  </body>
+</html>
